@@ -1,8 +1,8 @@
 name: CI to Docker Hub
 on:
-  push:
-    branches: [ main ]
-
+  release:
+    types:
+      - published
 
 jobs:
 
@@ -30,7 +30,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: loadimpact/honeyaws:latest
+          tags: loadimpact/honeyaws:latest,loadimpact/honeyaws:${{ github.event.release.tag_name }}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
